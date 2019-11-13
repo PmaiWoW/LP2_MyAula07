@@ -8,7 +8,7 @@ namespace Delegates
         {
             StrConcat strConcat = new StrConcat("boi");
 
-            VoidStringDelegate StringChains = PrintUpper;
+            Action<string> StringChains = PrintUpper;
             StringChains += PrintLower;
             StringChains += strConcat.ConcatAndPrint;
 
