@@ -2,12 +2,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class EventMaster : MonoBehaviour
 {
 
     // The background image
     [SerializeField] private Texture background = null;
+    [SerializeField] private int pressCount = 0;
 
     // Update is called once per frame
     private void Update()
@@ -16,6 +18,11 @@ public class EventMaster : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.S)) OnKeyPress('S');
         if (Input.GetKeyDown(KeyCode.A)) OnKeyPress('A');
         if (Input.GetKeyDown(KeyCode.D)) OnKeyPress('D');
+
+        if (UnityEngine.Random.value < 0.001f)
+            OnKeyPressMultiple(
+                (char)UnityEngine.Random.Range(0, 100),
+                UnityEngine.Random.Range(0, 1500));
     }
 
     // Use Unity's immediate mode GUI (IMGUI) to display information
@@ -46,4 +53,14 @@ public class EventMaster : MonoBehaviour
 
     // Others can add or remove listeners to the key press event
     public event EventHandler<KeyEventArgs> KeyPress;
+
+    [Serializable]
+    public class MyUnityEvent : UnityEvent<char, int> { }
+
+    protected virtual void OnKeyPressMultiple(char key, int value)
+    {
+        if (KeyPressMultiple != null) KeyPressMultiple.Invoke(key, value);
+    }
+
+    public MyUnityEvent KeyPressMultiple;
 }

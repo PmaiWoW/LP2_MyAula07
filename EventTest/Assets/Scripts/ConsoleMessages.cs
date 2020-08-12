@@ -43,4 +43,9 @@ public class ConsoleMessages : MonoBehaviour
                 break;
         }
     }
+
+    public void ShowSomethingWeird(char key, int number)
+    {
+        Debug.Log($"key is {key}, number is {number}.");
+    }
 }
